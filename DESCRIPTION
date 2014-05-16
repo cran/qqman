@@ -1,6 +1,6 @@
 Package: qqman
 Title: Q-Q and manhattan plots for GWAS data
-Version: 0.1.0
+Version: 0.1.1
 Author: Stephen Turner <vustephen@gmail.com>
 Maintainer: Stephen Turner <vustephen@gmail.com>
 Description: Q-Q and manhattan plots for GWAS data
@@ -9,7 +9,7 @@ Suggests: knitr
 License: GPL-3
 LazyData: true
 VignetteBuilder: knitr
-Packaged: 2014-05-10 12:00:39 UTC; sdt5z
+Packaged: 2014-05-16 16:59:56 UTC; sdt5z
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2014-05-10 18:28:51
+Date/Publication: 2014-05-16 19:53:55
