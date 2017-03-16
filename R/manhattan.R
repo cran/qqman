@@ -26,22 +26,29 @@
 #'   useful to plot raw p-values, but plotting the raw value could be useful for
 #'   other genome-wide plots, for example, peak heights, bayes factors, test 
 #'   statistics, other "scores," etc.
+#' @param annotatePval If set, SNPs below this p-value will be annotated on the plot.
+#' @param annotateTop If TRUE, only annotates the top hit on each chromosome that is below the annotatePval threshold. 
 #' @param ... Arguments passed on to other plot/points functions
 #'   
 #' @return A manhattan plot.
 #'   
 #' @keywords visualization manhattan
 #'   
+#' @import utils
+#' @import graphics
+#' 
 #' @examples
 #' manhattan(gwasResults)
+#'   
+#' @importFrom calibrate textxy  
 #'   
 #' @export
 
 manhattan <- function(x, chr="CHR", bp="BP", p="P", snp="SNP", 
                       col=c("gray10", "gray60"), chrlabs=NULL,
                       suggestiveline=-log10(1e-5), genomewideline=-log10(5e-8), 
-                      highlight=NULL, logp=TRUE, ...) {
-    
+                      highlight=NULL, logp=TRUE, annotatePval = NULL, annotateTop = TRUE, ...) {
+
     # Not sure why, but package check will warn without this.
     CHR=BP=P=index=NULL
     
@@ -96,10 +103,12 @@ manhattan <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     # 3   1  5
     nchr = length(unique(d$CHR))
     if (nchr==1) { ## For a single chromosome
-        options(scipen=999)
-	d$pos=d$BP/1e6
+        ## Uncomment the next two linex to plot single chr results in Mb
+        #options(scipen=999)
+	    #d$pos=d$BP/1e6
+        d$pos=d$BP
         ticks=floor(length(d$pos))/2+1
-        xlabel = paste('Chromosome',unique(d$CHR),'position(Mb)')
+        xlabel = paste('Chromosome',unique(d$CHR),'position')
         labs = ticks
     } else { ## For multiple chromosomes
         lastbase=0
@@ -114,7 +123,7 @@ manhattan <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
             # Old way: assumes SNPs evenly distributed
             # ticks=c(ticks, d[d$index==i, ]$pos[floor(length(d[d$index==i, ]$pos)/2)+1])
             # New way: doesn't make that assumption
-            ticks = c(ticks, (min(d[d$CHR == i,]$pos) + max(d[d$CHR == i,]$pos))/2 + 1)
+            ticks = c(ticks, (min(d[d$index == i,]$pos) + max(d[d$index == i,]$pos))/2 + 1)
         }
         xlabel = 'Chromosome'
         #labs = append(unique(d$CHR),'') ## I forgot what this was here for... if seems to work, remove.
@@ -188,5 +197,30 @@ manhattan <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
         d.highlight=d[which(d$SNP %in% highlight), ]
         with(d.highlight, points(pos, logp, col="green3", pch=20, ...)) 
     }
-
+    
+    # Highlight top SNPs
+    if (!is.null(annotatePval)) {
+        # extract top SNPs at given p-val
+        topHits = subset(d, P <= annotatePval)
+        par(xpd = TRUE)
+        # annotate these SNPs
+        if (annotateTop == FALSE) {
+            with(subset(d, P <= annotatePval), 
+                 textxy(pos, -log10(P), offset = 0.625, labs = topHits$SNP, cex = 0.45), ...)
+        }
+        else {
+            # could try alternative, annotate top SNP of each sig chr
+            topHits <- topHits[order(topHits$P),]
+            topSNPs <- NULL
+            
+            for (i in unique(topHits$CHR)) {
+                
+                chrSNPs <- topHits[topHits$CHR == i,]
+                topSNPs <- rbind(topSNPs, chrSNPs[1,])
+                
+            }
+            textxy(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = 0.5, ...)
+        }
+    }  
+    par(xpd = FALSE)
 }

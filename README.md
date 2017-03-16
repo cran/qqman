@@ -1,6 +1,8 @@
 # qqman: An R package for creating Q-Q and manhattan plots from GWAS results.
 
-![qqman.gif](assets/qqman.gif)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qqman)](http://cran.r-project.org/package=qqman)
+
+![qqman.gif](tools/qqman.gif)
 
 ## Citation
 
