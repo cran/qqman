@@ -1,3 +1,20 @@
+# qqman 0.1.8
+
+* Add `rmarkdown` to Suggests.
+
+# qqman 0.1.7
+
+* When `logp=FALSE`, SNPs can be annotated if their value from the P column is above the threshold given by `annotatePval`, and not below.
+
+# qqman 0.1.6
+
+* Added "URL" and "BugReports" fields to description.
+* Updated vignette.
+
+# qqman 0.1.5
+
+* Optimizations thanks to [XikunHan](https://github.com/XikunHan).
+
 # qqman 0.1.4
 
 * Minor fix to location to referenced image for pandoc self-contained README.html generation. 

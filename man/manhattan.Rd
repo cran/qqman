@@ -4,11 +4,22 @@
 \alias{manhattan}
 \title{Creates a manhattan plot}
 \usage{
-manhattan(x, chr = "CHR", bp = "BP", p = "P", snp = "SNP",
-  col = c("gray10", "gray60"), chrlabs = NULL,
-  suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),
-  highlight = NULL, logp = TRUE, annotatePval = NULL,
-  annotateTop = TRUE, ...)
+manhattan(
+  x,
+  chr = "CHR",
+  bp = "BP",
+  p = "P",
+  snp = "SNP",
+  col = c("gray10", "gray60"),
+  chrlabs = NULL,
+  suggestiveline = -log10(1e-05),
+  genomewideline = -log10(5e-08),
+  highlight = NULL,
+  logp = TRUE,
+  annotatePval = NULL,
+  annotateTop = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A data.frame with columns "BP," "CHR," "P," and optionally, "SNP."}
@@ -45,9 +56,9 @@ useful to plot raw p-values, but plotting the raw value could be useful for
 other genome-wide plots, for example, peak heights, bayes factors, test 
 statistics, other "scores," etc.}
 
-\item{annotatePval}{If set, SNPs below this p-value will be annotated on the plot.}
+\item{annotatePval}{If set, SNPs below this p-value will be annotated on the plot. If logp is FALSE, SNPs above the specified value will be annotated.}
 
-\item{annotateTop}{If TRUE, only annotates the top hit on each chromosome that is below the annotatePval threshold.}
+\item{annotateTop}{If TRUE, only annotates the top hit on each chromosome that is below the annotatePval threshold (or above if logp is FALSE).}
 
 \item{...}{Arguments passed on to other plot/points functions}
 }
