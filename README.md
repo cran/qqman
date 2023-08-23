@@ -20,27 +20,27 @@ Turner, S.D. qqman: an R package for visualizing GWAS results using Q-Q and manh
 
 Install the stable release from CRAN:
 
-```coffee
+```r
 install.packages("qqman")
 ```
 
 Or install directly from github using devtools
 
-```coffee
+```r
 library(devtools)
 install_github("stephenturner/qqman")
 ```
 
 Or install the most recent development release with devtools (note, there be dragons here):
 
-```coffee
+```r
 library(devtools)
 install_github("stephenturner/qqman", ref="dev")
 ```
 
 Load the package each time you use it:
 
-```coffee
+```r
 library(qqman)
 ```
 
@@ -48,31 +48,31 @@ library(qqman)
 
 See the [online package vignette](https://cran.r-project.org/package=qqman/vignettes/qqman.html) for more examples:
 
-```coffee
-vignette("manhattan")
+```r
+browseVignettes("qqman")
 ```
 
 Take a look at the built-in data:
 
-```coffee
+```r
 head(gwasResults)
 ```
 
 Basic manhattan plot using built-in data:
 
-```coffee
+```r
 manhattan(gwasResults)
 ```
 
 Basic Q-Q plot using built-in data:
 
-```coffee
+```r
 qq(gwasResults$P)
 ```
 
 Get help:
 
-```coffee
+```r
 ?manhattan
 ?qq
 ```
